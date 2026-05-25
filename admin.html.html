@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Admin | Portfolio CMS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <div id="login-zone" class="container" style="max-width: 400px; margin-top: 100px;">
+        <div class="card">
+            <h2>Connexion Admin</h2>
+            <div id="login-error" class="status-msg status-error hidden"></div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="login-email">
+            </div>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" id="login-pass">
+            </div>
+            <button id="btn-login" style="width:100%;">Se connecter</button>
+        </div>
+    </div>
+
+    <div id="admin-zone" class="container hidden">
+        <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h1>Dashboard CMS Personnel</h1>
+            <button id="btn-logout" class="btn-danger">Déconnexion</button>
+        </header>
+
+        <div id="global-status" class="status-msg hidden"></div>
+
+        <section class="card">
+            <h2>Identité & Personnalisation</h2>
+            <form id="form-about">
+                <div class="form-group">
+                    <label>Nom Complet</label>
+                    <input type="text" id="adm-name">
+                </div>
+                <div class="form-group">
+                    <label>Intitulé du poste / Recherche</label>
+                    <input type="text" id="adm-title" placeholder="Ex: Étudiant Bac Pro CIEL - En recherche d'alternance BTS SIO / CIEL">
+                </div>
+                <div class="form-group">
+                    <label>Biographie / Présentation</label>
+                    <textarea id="adm-bio" rows="4"></textarea>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Email de contact</label>
+                        <input type="email" id="adm-email">
+                    </div>
+                    <div class="form-group">
+                        <label>Lien GitHub</label>
+                        <input type="url" id="adm-github">
+                    </div>
+                    <div class="form-group">
+                        <label>Lien LinkedIn</label>
+                        <input type="url" id="adm-linkedin">
+                    </div>
+                </div>
+                <div class="form-group" style="max-width: 200px;">
+                    <label>Couleur Thème (Accent)</label>
+                    <input type="color" id="adm-theme">
+                </div>
+                <button type="submit">Enregistrer les informations</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Gestion des Compétences</h2>
+            <form id="form-skill" style="display:flex; gap:10px; margin-bottom:20px;">
+                <input type="text" id="skill-name" placeholder="Ex: Linux, Wireshark, Python, Cisco..." required>
+                <button type="submit">Ajouter</button>
+            </form>
+            <div id="adm-skills-list"></div>
+        </section>
+
+        <section class="card">
+            <h2>Ajouter un Projet</h2>
+            <form id="form-project">
+                <div class="grid">
+                    <div class="form-group"><label>Titre</label><input type="text" id="proj-title" required></div>
+                    <div class="form-group"><label>Date</label><input type="text" id="proj-date" placeholder="Ex: Mai 2026" required></div>
+                </div>
+                <div class="form-group"><label>Description</label><textarea id="proj-desc" rows="3" required></textarea></div>
+                <div class="form-group"><label>Technologies (séparées par des virgules)</label><input type="text" id="proj-tech" placeholder="HTML, CSS, JS, Docker" required></div>
+                <div class="grid">
+                    <div class="form-group"><label>Lien GitHub</label><input type="url" id="proj-github"></div>
+                    <div class="form-group"><label>Lien Démo</label><input type="url" id="proj-demo"></div>
+                </div>
+                <div class="form-group"><label>URL Image / Capture</label><input type="text" id="proj-img" placeholder="https://lien-vers-votre-image.com/img.png"></div>
+                <button type="submit">Publier le Projet</button>
+            </form>
+            <hr style="margin:20px 0; border:0; border-top:1px solid var(--border-color);">
+            <h3>Projets en ligne</h3>
+            <div id="adm-projects-list" style="margin-top:15px;"></div>
+        </section>
+
+        <section class="card">
+            <h2>Ajouter un Write-up / CTF</h2>
+            <form id="form-writeup">
+                <div class="grid">
+                    <div class="form-group"><label>Titre</label><input type="text" id="wp-title" required></div>
+                    <div class="form-group"><label>Catégorie</label><input type="text" id="wp-cat" placeholder="Ex: Web, Reverse, Reseau" required></div>
+                </div>
+                <div class="grid">
+                    <div class="form-group"><label>Date</label><input type="text" id="wp-date" placeholder="Ex: 2026" required></div>
+                    <div class="form-group"><label>Lien du rapport (Lien externe ou hébergé)</label><input type="url" id="wp-link"></div>
+                </div>
+                <div class="form-group"><label>Description rapide de la vulnérabilité/résolution</label><textarea id="wp-desc" rows="2" required></textarea></div>
+                <button type="submit">Publier le Write-up</button>
+            </form>
+            <hr style="margin:20px 0; border:0; border-top:1px solid var(--border-color);">
+            <h3>Write-ups en ligne</h3>
+            <div id="adm-writeups-list" style="margin-top:15px;"></div>
+        </section>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

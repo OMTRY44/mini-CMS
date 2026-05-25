@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Tech & Cybersecurity</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1 id="pub-name">Chargement...</h1>
+        <p id="pub-title" style="color: var(--text-muted);"></p>
+        <nav style="margin-top: 15px;">
+            <a href="#about">À propos</a>
+            <a href="#projects">Projets</a>
+            <a href="#skills">Compétences</a>
+            <a href="#writeups">Write-ups</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2>À propos</h2>
+            <p id="pub-bio">Chargement des données de présentation...</p>
+        </section>
+
+        <section id="projects">
+            <h2>Projets Réalisés</h2>
+            <div class="grid" id="projects-container"></div>
+        </section>
+
+        <section id="skills">
+            <h2>Compétences Techniques</h2>
+            <div id="skills-container"></div>
+        </section>
+
+        <section id="writeups">
+            <h2>Write-ups / CTF & Labs</h2>
+            <div class="grid" id="writeups-container"></div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact & Réseaux</h2>
+            <div class="card">
+                <p>Intéressé par mon profil pour une alternance ? Contactez-moi directement :</p>
+                <div id="contact-links" style="margin-top: 15px;"></div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Portfolio Professionnel. Propulsé par Firestore.</p>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script src="public.js"></script>
+</body>
+</html>
